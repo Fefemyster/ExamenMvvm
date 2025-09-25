@@ -1,7 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using ExamenMvvm.Models;
-using SoundAnalysis;
+
+
 
 namespace ExamenMvvm.ViewModels
 {
@@ -21,44 +22,51 @@ namespace ExamenMvvm.ViewModels
         private double descuento;
         [ObservableProperty]
         private double precioFinal;
+
         [RelayCommand]
+    
         private async Task CalcularDescuento()
         {
-
-            subtotal = producto1 + producto2 + producto3;
-            descuento = 0;
-
-            if (subtotal >= 1000 && subtotal <= 4999.99)
+           
+            if (Producto1 < 0 || Producto2 < 0 || Producto3 < 0)
             {
-                descuento = subtotal * 0.10;
-                precioFinal = subtotal - descuento;
-            }
-            else if (subtotal >= 5000 && subtotal <= 9999.99)
-            {
-                descuento = subtotal * 0.20;
-                precioFinal = subtotal - descuento;
-            }
-            else if (subtotal >= 10000 && subtotal <= 19999.99)
-            {
-                descuento = subtotal * 0.30;
-                precioFinal = subtotal - descuento;
-            }
-            else if (subtotal >= 20000)
-            {
-                descuento = 0; // No aplica descuento
-                precioFinal = subtotal;
+                await Application.Current!.MainPage!.DisplayAlert("Error", "No pueden haber precios negativos", "OK");
+                return; 
             }
 
+           
+            Subtotal = Producto1 + Producto2 + Producto3;
+            Descuento = 0;
 
-            [RelayCommand]
-            private void Clean()
+            if (Subtotal >= 1000 && Subtotal <= 4999.99)
             {
-                Producto1 = 0;
-                Producto2 = 0;
-                Producto3 = 0;
+                Descuento = Subtotal * 0.10;
+            }
+            else if (Subtotal >= 5000 && Subtotal <= 9999.99)
+            {
+                Descuento = Subtotal * 0.20;
+            }
+            else if (Subtotal >= 10000 && Subtotal <= 19999.99)
+            {
+                Descuento = Subtotal * 0.30;
+            }
+            else if (Subtotal >= 20000)
+            {
+                Descuento = 0; 
             }
 
+            PrecioFinal = Subtotal - Descuento;
         }
 
+        [RelayCommand]
+        private void Clean()
+        {
+            Producto1 = 0;
+            Producto2 = 0;
+            Producto3 = 0;
+            Subtotal = 0;
+            Descuento = 0;
+            PrecioFinal = 0;
+        }
     }
 }

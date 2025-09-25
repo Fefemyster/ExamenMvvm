@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ExamenMvvm.Views.MainView"
+             xmlns:viewmodels="clr-namespace:ExamenMvvm.ViewModels"
+   Title="MainView">
+
+   <ContentPage.BindingContext>
+        <viewmodels:MainViewModel />
+    </ContentPage.BindingContext>
+
+    <VerticalStackLayout Padding="20" Spacing="20">
+        <Label Text="Ingrese el primer producto:" />
+        <Entry Text="{Binding Producto1}" Keyboard="Numeric"/>
+
+        <Label Text="Ingrese el segundo producto:" />
+        <Entry Text="{Binding Producto2}" Keyboard="Numeric"/>
+
+        <Label Text="Ingrese el tercer producto:" />
+        <Entry Text="{Binding Producto3}" Keyboard="Numeric"/>
+
+        <Button Text="Calcular Descuento" Command="{Binding CalcularDescuentoCommand}" />
+        <Button Text="Limpiar" Background="HotPink" Command="{Binding CleanCommand}"/>
+
+        <Label Text="{Binding Subtotal, StringFormat='Subtotal: {0:C}'}" 
+               FontAttributes="Bold" FontSize="Medium" 
+               HorizontalOptions="Center"/>
+
+        <Label Text="{Binding Descuento, StringFormat='Descuento: {0:C}'}" 
+               FontAttributes="Bold" FontSize="Medium" 
+               HorizontalOptions="Center"/>
+
+        <Label Text="{Binding PrecioFinal, StringFormat='Total a pagar: {0:C}'}" 
+               FontAttributes="Bold" FontSize="Large" 
+               HorizontalOptions="Center"/>
+    </VerticalStackLayout>
+</ContentPage>
